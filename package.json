@@ -1,0 +1,35 @@
+{
+  "name": "fb-backend-authentication",
+  "version": "1.0.0",
+  "description": "Facebook authentication in backend using passport and mongoose",
+  "main": "app.js",
+  "scripts": {
+    "babel-node": "babel-node app.js",
+    "start": "nodemon --exec npm run babel-node",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Suraj",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "nodemon": "1.18.4"
+  },
+  "dependencies": {
+    "body-parser": "1.18.3",
+    "cors": "2.8.4",
+    "errorhandler": "^1.5.0",
+    "express": "4.16.3",
+    "express-jwt": "^5.3.1",
+    "express-session": "^1.15.6",
+    "mongoose": "5.2.15",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "path": "0.12.7"
+  }
+}
