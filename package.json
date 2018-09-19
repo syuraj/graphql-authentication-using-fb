@@ -4,9 +4,12 @@
   "description": "Facebook authentication in backend using passport and mongoose",
   "main": "app.js",
   "scripts": {
-    "babel-node": "babel-node app.js",
-    "start": "nodemon --exec npm run babel-node",
+    "start": "nf start",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "v10.9.0",
+    "npm": "6.2.0"
   },
   "author": "Suraj",
   "license": "ISC",
@@ -26,9 +29,12 @@
     "express": "4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
+    "foreman": "^3.0.1",
     "mongoose": "5.2.15",
+    "mongoose-findorcreate": "^3.0.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
+    "passport-facebook-token": "^3.3.0",
     "passport-local": "^1.0.0",
     "path": "0.12.7"
   }

@@ -6,9 +6,10 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
+import passport from 'passport';
 
 import Users from './models/Users';
-import passport from './config/passport';
+import passportLocal from './config/passport';
 import routes from './routes';
 
 mongoose.promise = global.Promise;
@@ -20,8 +21,8 @@ app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
 app.use(routes);
 
 if (!isProduction) {
@@ -34,10 +35,10 @@ mongoose.set('debug', true);
 
 //Error handlers & middlewares
 if (!isProduction) {
-    app.use((err, req, res) => {
+    app.use((err, req, res, next) => {
         res.status(err.status || 500);
 
-        res.json({
+        res.send({
             errors: {
                 message: err.message,
                 error: err,
@@ -46,10 +47,10 @@ if (!isProduction) {
     });
 }
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
     res.status(err.status || 500);
 
-    res.json({
+    res.send({
         errors: {
             message: err.message,
             error: {},

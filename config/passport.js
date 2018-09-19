@@ -1,19 +1,27 @@
 import mongoose from 'mongoose';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
+import FacebookTokenStrategy from 'passport-facebook-token';
 
 const Users = mongoose.model('Users');
 
-passport.use(new LocalStrategy({
-    usernameField: 'user[email]',
-    passwordField: 'user[password]',
-}, (email, password, done) => {
-    Users.findOne({ email })
-        .then((user) => {
-            if (!user || !user.validatePassword(password)) {
-                return done(null, false, { errors: { 'email or password': 'is invalid' } });
-            }
+passport.use(new FacebookTokenStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET
+}, function (accessToken, refreshToken, profile, done) {
+    Users.findOrCreate(
+        { facebookId: profile.id },
+        { name: profile.displayName, pictureUrl: profile.photos[0].value },
+        function (error, user) {
+            return done(error, user);
+        });
+}
+));
 
-            return done(null, user);
-        }).catch(done);
-}));
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+    done(null, user);
+});
