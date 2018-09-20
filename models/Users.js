@@ -1,7 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 import findOrCreate from 'mongoose-findorcreate';
-import crypto from 'crypto';
-import jwt from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
 
 const UsersSchema = Schema({
     facebookId: String,
@@ -17,7 +16,7 @@ UsersSchema.methods.generateJWT = function () {
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
 
-    return jwt.sign({
+    return jsonwebtoken.sign({
         id: this._id,
         exp: parseInt(expirationDate.getTime() / 1000, 10),
     }, 'secret');
