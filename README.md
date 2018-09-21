@@ -6,16 +6,20 @@ Uses `passport-facebook-token` library to validate facebook access_token sent th
 
 #### Screenshots 1 [Authenticate User using Facebook access token]
 
-![alt text](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-authenticate.png)
+![authenticate-user](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-authenticate.png)
 
 
 
 #### Screenshots 2 [Subsequent calls (without locally generated token)]
 
-![alt text](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-unauthenticated-call.png)
+![401-Unauthorized-without-token](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-unauthenticated-call.png)
 
 
 
 #### Screenshots 3 [Subsequent calls (with locally generated token]
 
-![alt text](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-authenticated-call.png)
+![Authenticated call with token](https://github.com/syuraj/fb-backend-authentication/blob/master/img/postman-authenticated-call.png)
+
+
+#### Setup
+1. Create FACEBOOK_APP_ID & FACEBOOK_APP_SECRET in .env file or environment variables

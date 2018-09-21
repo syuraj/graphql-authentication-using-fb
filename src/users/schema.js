@@ -11,7 +11,7 @@ const UsersSchema = Schema({
 UsersSchema.plugin(findOrCreate);
 
 
-UsersSchema.methods.generateJWT = function () {
+UsersSchema.methods.generateJWT = function generateJWT () {
     const today = new Date();
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
@@ -22,11 +22,15 @@ UsersSchema.methods.generateJWT = function () {
     }, 'secret');
 };
 
-UsersSchema.methods.toAuthJSON = function () {
+UsersSchema.methods.toAuthJSON = function toAuthJSON () {
     return {
         _id: this._id,
         token: this.generateJWT(),
     };
 };
 
-mongoose.model('Users', UsersSchema);
+const User = mongoose.model('Users', UsersSchema);
+
+export default {
+    User
+};

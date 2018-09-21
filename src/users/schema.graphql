@@ -1,0 +1,10 @@
+
+type User {
+    facebookId: String,
+    name: String,
+    pictureUrl: String
+}
+
+type Query {
+    current: User
+}

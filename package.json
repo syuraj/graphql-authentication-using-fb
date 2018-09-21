@@ -23,20 +23,22 @@
     "nodemon": "1.18.4"
   },
   "dependencies": {
-    "body-parser": "1.18.3",
+    "apollo-server-express": "^2.1.0",
+    "body-parser": "^1.18.3",
     "cors": "2.8.4",
     "errorhandler": "^1.5.0",
     "express": "4.16.3",
     "express-jwt": "^5.3.1",
     "express-session": "^1.15.6",
     "foreman": "^3.0.1",
+    "graphql": "^14.0.2",
+    "graphql-tools": "^4.0.0",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "5.2.15",
     "mongoose-findorcreate": "^3.0.0",
     "morgan": "^1.9.1",
     "passport": "^0.4.0",
     "passport-facebook-token": "^3.3.0",
-    "passport-local": "^1.0.0",
-    "path": "0.12.7"
+    "schemaglue": "^4.0.2"
   }
 }
