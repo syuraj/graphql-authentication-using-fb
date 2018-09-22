@@ -1,11 +1,4 @@
 import jwt from 'express-jwt';
-import url from 'url';
-
-const getTokenFromUrl = (req) => {
-    const queryData = url.parse(req.url, true).query;
-
-    return queryData.access_token;
-};
 
 const getTokenFromHeaderOrUrl = (req) => {
     const { headers: { authorization } } = req;
@@ -14,7 +7,7 @@ const getTokenFromHeaderOrUrl = (req) => {
         return authorization.split(' ')[1];
     }
 
-    return getTokenFromUrl(req);
+    return null;
 };
 
 const auth = {
