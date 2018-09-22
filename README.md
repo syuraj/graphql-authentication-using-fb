@@ -10,3 +10,7 @@ GraphQL queries get decoded usercontext in context
 
 #### Setup
 1. Save FACEBOOK_APP_ID & FACEBOOK_APP_SECRET in .env file or environment variables
+
+
+#### Demo
+![graphql auth demo](https://github.com/syuraj/graphql-authentication-using-fb/blob/master/assets/graphql-auth-demo.gif)
