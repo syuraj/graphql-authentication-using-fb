@@ -2,16 +2,16 @@ import mongoose, { Schema } from 'mongoose';
 import findOrCreate from 'mongoose-findorcreate';
 import jsonwebtoken from 'jsonwebtoken';
 
-const UsersSchema = Schema({
+const UserSchema = Schema({
     facebookId: String,
     name: String,
     pictureUrl: String
 });
 
-UsersSchema.plugin(findOrCreate);
+UserSchema.plugin(findOrCreate);
 
 
-UsersSchema.methods.generateJWT = function generateJWT () {
+UserSchema.methods.generateJWT = function generateJWT () {
     const today = new Date();
     const expirationDate = new Date(today);
     expirationDate.setDate(today.getDate() + 60);
@@ -22,14 +22,14 @@ UsersSchema.methods.generateJWT = function generateJWT () {
     }, 'secret');
 };
 
-UsersSchema.methods.toAuthJSON = function toAuthJSON () {
+UserSchema.methods.toAuthJSON = function toAuthJSON () {
     return {
         _id: this._id,
         token: this.generateJWT(),
     };
 };
 
-const User = mongoose.model('Users', UsersSchema);
+const User = mongoose.model('Users', UserSchema);
 
 export default {
     User

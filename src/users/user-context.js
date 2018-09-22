@@ -1,4 +1,3 @@
-// import jwt from 'express-jwt';
 import jsonwebtoken from 'jsonwebtoken';
 
 const getTokenFromHeaders = (req) => {
@@ -10,26 +9,18 @@ const getTokenFromHeaders = (req) => {
     return null;
 };
 
-// const userLookup = jwt({
-//     secret: 'secret',
-//     userProperty: 'payload',
-//     getToken: getTokenFromHeaders,
-// });
-
-const userContext = (req) => {
+const getUserContext = (req) => {
     const token = getTokenFromHeaders(req);
 
-    console.log('printing token ', token);
+    if (!!token) {
+        const userContext = jsonwebtoken.verify(token, 'secret');
 
-    const decoded = jsonwebtoken.verify(token, 'secret');
+        console.log('printing decoded ', userContext);
 
-    console.log('printing decoded ', decoded);
+        return { userContext };
+    }
 
-    return { decoded };
-
-    // // if (!user) {
-    // //     throw new Error('You need to be authenticated to access this schema!');
-    // // }
+    return { userContext: { status: 'Unauthorized' } };
 };
 
-export default userContext;
+export default getUserContext;

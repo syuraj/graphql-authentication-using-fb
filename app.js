@@ -5,17 +5,14 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import errorhandler from 'errorhandler';
 import morgan from 'morgan';
-import passport from 'passport';
 
 import { ApolloServer } from 'apollo-server-express';
-// import { makeExecutableSchema } from 'graphql-tools';
 import glue from 'schemaglue';
 
-import userSchema from './src/users/schema';
-import passportFB from './src/config/passport';
+import UserMongooseSchema from './src/users/schema';
+import passport from './src/config/passport';
 import loginRoute from './src/users/login-routes';
-import userContext from './src/users/user-context';
-import auth from './src/users/auth';
+import getUserContext from './src/users/user-context';
 
 // Configure Mongoose
 mongoose.promise = global.Promise;
@@ -33,7 +30,6 @@ app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRoute);
-// app.use('/', auth.required);
 
 if (!isProduction) {
     app.use(errorhandler());
@@ -45,10 +41,9 @@ const server = new ApolloServer({
     typeDefs: schema,
     resolvers: resolver,
     context: ({ req, res }) => ({
-        authenticatedUser: userContext(req)
-        // ...userSchema
+        ...getUserContext(req),
+        ...UserMongooseSchema
     }),
-    // context: { ...userSchema, ...userContext },
     playground: {
         settings: {
             'editor.theme': 'light'
@@ -56,32 +51,33 @@ const server = new ApolloServer({
     }
 });
 
+// app.use('/', auth.required);
 server.applyMiddleware({ app });
 
 // Error handlers & middlewares
-// if (!isProduction) {
-//     app.use((err, req, res, next) => {
-//         res.status(err.status || 500);
+if (!isProduction) {
+    app.use((err, req, res, next) => {
+        res.status(err.status || 500);
 
-//         res.send({
-//             errors: {
-//                 message: err.message,
-//                 error: err,
-//             },
-//         });
-//     });
-// }
+        res.send({
+            errors: {
+                message: err.message,
+                error: err,
+            },
+        });
+    });
+}
 
-// app.use((err, req, res, next) => {
-//     res.status(err.status || 500);
+app.use((err, req, res, next) => {
+    res.status(err.status || 500);
 
-//     res.send({
-//         errors: {
-//             message: err.message,
-//             error: {},
-//         },
-//     });
-// });
+    res.send({
+        errors: {
+            message: err.message,
+            error: {},
+        },
+    });
+});
 
 
 app.listen(8000, () => console.log('Server running on http://localhost:8000/'));
