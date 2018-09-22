@@ -9,10 +9,10 @@ import morgan from 'morgan';
 import { ApolloServer } from 'apollo-server-express';
 import glue from 'schemaglue';
 
+import auth from './src/users/auth';
 import UserMongooseSchema from './src/users/schema';
 import passport from './src/config/passport';
 import loginRoute from './src/users/login-routes';
-import getUserContext from './src/users/user-context';
 
 // Configure Mongoose
 mongoose.promise = global.Promise;
@@ -30,6 +30,7 @@ app.use(session({ secret: 'passport-tutorial', cookie: { maxAge: 60000 }, resave
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(loginRoute);
+app.use('/', auth.required);
 
 if (!isProduction) {
     app.use(errorhandler());
@@ -41,7 +42,7 @@ const server = new ApolloServer({
     typeDefs: schema,
     resolvers: resolver,
     context: ({ req, res }) => ({
-        ...getUserContext(req),
+        ...{ userContext: req.payload },
         ...UserMongooseSchema
     }),
     playground: {
@@ -51,7 +52,6 @@ const server = new ApolloServer({
     }
 });
 
-// app.use('/', auth.required);
 server.applyMiddleware({ app });
 
 // Error handlers & middlewares
